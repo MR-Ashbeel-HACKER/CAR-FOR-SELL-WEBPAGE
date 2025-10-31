@@ -1,37 +1,42 @@
 // Navbar toggle
-let MenuBtn = document.querySelector("#MenuBtn");
-let Navbar = document.querySelector(".navbar");
+const MenuBtn = document.querySelector("#MenuBtn");
+const Navbar = document.querySelector(".navbar");
 
 MenuBtn.onclick = () => {
-    MenuBtn.classList.toggle("fa-times");
-    Navbar.classList.toggle("active");
+  MenuBtn.classList.toggle("fa-times");
+  Navbar.classList.toggle("active");
 };
 
 // Login form toggle
-let loginBtn = document.querySelector("#LoginBtn");
-let loginForm = document.querySelector(".LoginFormContainer");
-let closeBtn = document.querySelector("#CloseLoginForm");
+const loginBtn = document.querySelector("#LoginBtn");
+const loginForm = document.querySelector(".LoginFormContainer");
+const closeBtn = document.querySelector("#CloseLoginForm");
 
 loginBtn.onclick = () => {
-    loginForm.classList.add("active");
+  loginForm.classList.add("active");
 };
+
 closeBtn.onclick = () => {
-    loginForm.classList.remove("active");
+  loginForm.classList.remove("active");
 };
 
-// Home Parallax Effect
-document.querySelector(".home").onmousemove = (e) => {
-    document.querySelectorAll(".HomeParallexEffect").forEach((el) => {
-        let speed = el.getAttribute("data-speed");
-        let x = (window.innerWidth - e.pageX * speed) / 90;
-        let y = (window.innerHeight - e.pageY * speed) / 90;
+// Home Parallax Effect (optimized for performance)
+const home = document.querySelector(".home");
+const parallexElements = document.querySelectorAll(".HomeParallexEffect");
 
-        el.style.transform = `translateX(${x}px) translateY(${y}px)`;
+home.addEventListener("mousemove", (e) => {
+  window.requestAnimationFrame(() => {
+    parallexElements.forEach((el) => {
+      const speed = el.getAttribute("data-speed");
+      const x = (window.innerWidth - e.pageX * speed) / 120;
+      const y = (window.innerHeight - e.pageY * speed) / 120;
+      el.style.transform = `translate(${x}px, ${y}px)`;
     });
-};
+  });
+});
 
-document.querySelector(".home").onmouseleave = () => {
-    document.querySelectorAll(".HomeParallexEffect").forEach((el) => {
-        el.style.transform = `translateX(0px) translateY(0px)`;
-    });
-};
+home.addEventListener("mouseleave", () => {
+  parallexElements.forEach((el) => {
+    el.style.transform = "translate(0px, 0px)";
+  });
+});
